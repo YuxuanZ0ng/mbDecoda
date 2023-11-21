@@ -214,7 +214,7 @@ rownames(simlist)=c("power.mbDecoda", "power.fastANCOM", "power.LinDA", "power.L
 f=function(i){
   index=sim.seed[,i]
   data.frame(class=rep(c("power","empirical FDR"),each=4),
-             method=rep(c("mbDecoda", "fastANCOM", "LINDA", "LOCOM"),2),
+             method=rep(c("mbDecoda", "fastANCOM", "LinDA", "LOCOM"),2),
              value=rowMeans(simlist[,index]))
 }
 

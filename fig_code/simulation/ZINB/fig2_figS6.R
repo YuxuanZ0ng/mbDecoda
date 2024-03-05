@@ -8,20 +8,21 @@ source("ZINB_sim.R")
 ncores=40
 n.sim=100
 K=100
-n1=15
-n2=15
-sig.prob = rep(c(0.05,0.1,0.2,0.5),each=2)
+n1=25
+n2=25
+sig.prob=0.2
+zi.prob = rep(c(0,0.1,0.3,0.5),each=2)
 bias = rep(c("small","large"),4)
 sim.seed=matrix(1:(n.sim*8),n.sim,8)
 confounder = F
 
 DATA=list()
 for (i in 1:8) {
-  sig.prob.i=sig.prob[i]
+  zi.prob.i=zi.prob[i]
   bias.i=bias[i]
   for (j in sim.seed[,i]) {
     set.seed(j)
-    DATA[[j]]=ZINB_sim(seed=j,K=K,n1=n1,n2=n2,p=sig.prob.i,bias =bias.i,zi=0.3,confounder =confounder)
+    DATA[[j]]=ZINB_sim(seed=j,K=K,n1=n1,n2=n2,p=sig.prob,bias =bias.i,zi=zi.prob.i,confounder =confounder)
   }
 }
 
@@ -110,7 +111,7 @@ locom=foreach(i = 1:length(DATA), .combine = 'cbind') %do% {
   group=data[["grp"]]
   count=data[["count"]]
   
-  suppressWarnings(out_LOCOM <- try(locom(otu.table =as.matrix(count), Y = factor(group), fdr.nominal = 0.05, prev.cut = 0, seed = 1, n.cores = 40)
+  suppressWarnings(out_LOCOM <- try(locom(otu.table =as.matrix(count), Y = factor(group), fdr.nominal = 0.05, prev.cut = 0, seed = 1, n.cores = ncores)
                                     , silent = TRUE))
   if (inherits(out_LOCOM, "try-error")) {
     fdr_LOCOM=0; power_LOCOM=0
@@ -132,8 +133,6 @@ simlist=simlist*100
 rownames(simlist)=c("power.mbDecoda", "power.ANCOMBC", "power.fastANCOM", "power.LinDA", "power.LOCOM",
                     "fdr.mbDecoda", "fdr.ANCOMBC", "fdr.fastANCOM", "fdr.LinDA", "fdr.LOCOM")
 
-
-
 ##########bar plot#########
 f=function(i){
   index=sim.seed[,i]
@@ -143,33 +142,32 @@ f=function(i){
 }
 
 power.fdr=foreach(i=1:8, .combine=rbind) %do% f(i)
-out=data.frame(sig=rep(c(0.05,0.1,0.2,0.5),each=20),
-               q=rep(rep(c(0.5,5),4),each=10),
+
+out=data.frame(zi=rep(c(0,0.1,0.3,0.5),each=20),
+               q=rep(c(0.5,5),each=10),
                power.fdr)
-colnames(out)=c("sig.prob","q","class","method","value")
-out$sig.prob=factor(out$sig.prob, levels =c("0.05","0.1","0.2","0.5"))
+colnames(out)=c("zi.prob","q","class","method","value")
+out$zi.prob=factor(out$zi.prob, levels =c("0","0.1","0.3","0.5"))
 out$class=factor(out$class, levels =c("power","empirical FDR"))
 out$q=factor(out$q, levels =c("0.5","5"))
 line=data.frame(class=factor(c("power","empirical FDR"), levels =c("power","empirical FDR")),y=c(NA,5))
 
 
-p=ggplot(out[out$q=="0.5",], aes(x=sig.prob, y=value, fill=method))+ theme_bw()
+
+
+p=ggplot(out[out$q=="0.5",], aes(x=zi.prob, y=value, fill=method))+ theme_bw()
 p=p+geom_bar(aes(col=method),stat="identity",position=position_dodge(0.75),width = 0.5)+
-  #geom_boxplot(aes(col=method))+,scales="free",space="free"
   facet_grid(vars(class), labeller = labeller(.cols = label_both))+ylim(c(0,100))+
   geom_hline(data= line, aes(yintercept=y),linetype = "dashed")+ theme(legend.position = "top")+
-  labs( y = 'empirical FDR and power (%)',x=expression(pi))+ scale_fill_npg()+scale_color_npg()
+  labs( y = 'empirical FDR and power (%)',x=expression(eta))+ scale_fill_npg()+scale_color_npg()
 
 p
 
 
-
-p1=ggplot(out[out$q=="5",], aes(x=sig.prob, y=value, fill=method))+ theme_bw()
+p1=ggplot(out[out$q=="5",], aes(x=zi.prob, y=value, fill=method))+ theme_bw()
 p1=p1+geom_bar(aes(col=method),stat="identity",position=position_dodge(0.75),width = 0.5)+
-  #geom_boxplot(aes(col=method))+,scales="free",space="free"
   facet_grid(vars(class), labeller = labeller(.cols = label_both))+ylim(c(0,100))+
   geom_hline(data= line, aes(yintercept=y),linetype = "dashed")+ theme(legend.position = "top")+
-  labs( y = 'empirical FDR and power (%)',x=expression(pi))+ scale_fill_npg()+scale_color_npg()
+  labs( y = 'empirical FDR and power (%)',x=expression(eta))+ scale_fill_npg()+scale_color_npg()
 
 p1
-

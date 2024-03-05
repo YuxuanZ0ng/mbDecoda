@@ -202,7 +202,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda=NULL
@@ -258,7 +258,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda1=NULL
@@ -414,7 +414,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda=NULL
@@ -470,7 +470,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda1=NULL
@@ -581,7 +581,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda=NULL
@@ -635,7 +635,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda1=NULL
@@ -718,7 +718,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda=NULL
@@ -772,7 +772,7 @@ if (inherits(out_ANCOM, "try-error")) {
 }
 
 #mbDecoda
-suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                   , silent = TRUE))
 if (inherits(out_mbDecoda, "try-error")) {
   q_mbDecoda1=NULL

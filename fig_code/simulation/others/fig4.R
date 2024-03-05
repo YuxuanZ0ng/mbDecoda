@@ -60,7 +60,7 @@ simlist_ZIP=foreach(i = 1:length(DATA_ZIP), .combine = 'cbind') %dopar% {
   }
   
   #mbDecoda
-  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                     , silent = TRUE))
   if (inherits(out_mbDecoda, "try-error")) {
     fdr_mbDecoda=0; power_mbDecoda=0
@@ -173,7 +173,7 @@ simlist_DAS=foreach(i = DATA_DAS, .combine = 'cbind') %dopar% {
   }
   
   #mbDecoda
-  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                     , silent = TRUE))
   if (inherits(out_mbDecoda, "try-error")) {
     fdr_mbDecoda=0; power_mbDecoda=0
@@ -284,7 +284,7 @@ simlist_LINDA=foreach(i = DATA_LINDA, .combine = 'cbind') %dopar% {
   
   
   #mbDecoda
-  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=NULL, W=NULL, adjust=adjust)
+  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=NULL, W=NULL, prev.cut = 0, adjust=adjust)
                                     , silent = TRUE))
   if (inherits(out_mbDecoda, "try-error")) {
     fdr_mbDecoda=0; power_mbDecoda=0
@@ -397,7 +397,7 @@ simlist_ANCOMBC=foreach(i = DATA_ANCOMBC, .combine = 'cbind') %dopar% {
   
   
   #mbDecoda
-  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=NULL, W=NULL, adjust=adjust)
+  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=NULL, W=NULL, prev.cut = 0, adjust=adjust)
                                     , silent = TRUE))
   if (inherits(out_mbDecoda, "try-error")) {
     fdr_mbDecoda=0; power_mbDecoda=0

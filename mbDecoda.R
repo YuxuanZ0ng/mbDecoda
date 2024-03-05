@@ -37,7 +37,7 @@ M=function(k,para.list){
   return(M_k)
 }
 
-mbDecoda=function(count,x,Gamma=NULL,W=NULL,interval.prob=0.5,signif=0.05,d_init=F,maxit = 100,reltol = 1e-5,adjust="BH"){
+mbDecoda=function(count,x,Gamma=NULL,W=NULL,interval.prob=0.5,signif=0.05,d_init=F, prev.cut = 0.05, maxit = 100,reltol = 1e-5,adjust="BH"){
   count=as.matrix(count)
   n=length(count[,1])
   K=length(count[1,])
@@ -47,7 +47,7 @@ mbDecoda=function(count,x,Gamma=NULL,W=NULL,interval.prob=0.5,signif=0.05,d_init
   }else{
     tax_struc=integer(0)
   }
-  tax_keep=which(colSums(count)==0)
+  tax_keep=which(colSums(count)<=prev.cut) #filtering rare taxa
   if(is.null(W)){
     W=matrix(1,n,1)
   }else{
@@ -138,8 +138,8 @@ mbDecoda=function(count,x,Gamma=NULL,W=NULL,interval.prob=0.5,signif=0.05,d_init
   #inference
   p.val = sapply(delta/sd, function(x) 2*pnorm(abs(x), mean = 0, sd = 1, lower.tail = F))
   p.val[is.na(p.val)]=1 
-  p.val[tax_struc]=0  #these taxon are present in only one group, which lead to weighted nb variable dissatisfaction rank.
-  p.val[tax_keep]=1 #this taxon are considered as inexistent
+  p.val[tax_struc]=0  #these taxa are considered as structure zero, who present in only one group.
+  p.val[tax_keep]=NA #these taxa are considered as rare taxa
   q.val=p.adjust(p.val, method =adjust)
   reject=c(q.val<signif)
   if(is.null(Gamma)){

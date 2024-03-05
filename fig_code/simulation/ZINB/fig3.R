@@ -69,7 +69,7 @@ simlist=foreach(i = 1:length(DATA), .combine = 'cbind') %dopar% {
   }
   
   #mbDecoda
-  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, adjust=adjust)
+  suppressWarnings(out_mbDecoda <- try(mbDecoda(count, x=group, Gamma=Gamma, W=NULL, prev.cut = 0, adjust=adjust)
                                     , silent = TRUE))
   if (inherits(out_mbDecoda, "try-error")) {
     fdr_mbDecoda=0; power_mbDecoda=0

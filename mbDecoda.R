@@ -47,7 +47,7 @@ mbDecoda=function(count,x,Gamma=NULL,W=NULL,interval.prob=0.5,signif=0.05,d_init
   }else{
     tax_struc=integer(0)
   }
-  tax_keep=which(colSums(count)<=prev.cut) #filtering rare taxa
+  tax_keep=which(colMeans(count!=0)<=prev.cut) #filtering rare taxa
   if(is.null(W)){
     W=matrix(1,n,1)
   }else{
